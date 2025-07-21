@@ -30,13 +30,35 @@ struct ContentView: View {
                 VStack {
                     PieChart(
                         data: [
-                            PieChartData(value: 15, color: Color.red, label: "Hello"),
-                            PieChartData(value: 25, color: Color.orange, label: "World"),
-                            PieChartData(value: 45, color: Color.blue, label: "Gamer")
+                            PieChartData(
+                                max: 100,
+                                value: 200,
+                                color: Color.yellow,
+                                label: "Food"
+                            ),
+                            PieChartData(
+                                max: 100,
+                                value: 50,
+                                color: Color.orange,
+                                label: "Rent"
+                            ),
+                            PieChartData(
+                                max: 50,
+                                value: 45,
+                                color: Color.blue,
+                                label: "Utilities"
+                            ),
+                            PieChartData(
+                                max: 50,
+                                value: 32,
+                                color: Color.purple,
+                                label: "Lebron"
+                            )
                         ],
                         size: CGSize(width: 250, height: 250),
                         full: false
                     )
+                    .padding(EdgeInsets(top: 10, leading: 0, bottom: 0, trailing: 0))
                     Spacer()
                 }
                 .tabItem {
