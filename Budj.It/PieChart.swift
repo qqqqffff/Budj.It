@@ -17,10 +17,14 @@ struct PieChartData {
 struct PieChart: View {
     let data: [PieChartData]
     let size: CGSize
-    let full: Bool
+    @State var metrics: Bool
+    @State var totalPercent: Bool
     
     private var total: Double {
         data.reduce(0) { $0 + $1.max }
+    }
+    private var totalValue: Double {
+        data.reduce(0) { $0 + $1.value }
     }
     
     var body: some View {
@@ -66,26 +70,60 @@ struct PieChart: View {
                 Circle()
                     .fill(Color.white)
                     .frame(width: size.width - 44, height: size.height - 44)
-                
-                if data.count < 5 {
-                    VStack(alignment: .leading, spacing: 10) {
-                        ForEach(0..<data.count, id: \.self) { index in
-                            PieChartDataPoint(
-                                data: data[index],
-                                displayStyle: true
-                            )
-                        }
+                VStack(spacing: 5) {
+                    let overflow = totalValue > total
+                    let textColor = overflow ? Color.red : Color.black
+                    if totalPercent {
+                        Text("%\(String(format: "%.1f", Double(totalValue / total) * 100))")
+                            .foregroundStyle(textColor)
+                            .font(Font.title)
                     }
+                    else {
+                        Text("$\(String(format: "%.2f", totalValue))")
+                            .font(Font.title2)
+                            .foregroundStyle(textColor)
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                        Rectangle()
+                            .frame(height: 1)
+                            .foregroundStyle(.black.opacity(0.8))
+                        Text("$\(String(format: "%.2f", total))")
+                            .font(Font.title2)
+                            .foregroundStyle(textColor)
+                            .padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                    }
+                    
+                }
+                .fixedSize(horizontal: true, vertical: false)
+                .onTapGesture {
+                    totalPercent = !totalPercent
                 }
             }
             .frame(width: size.width, height: size.height)
             
-            if data.count > 5 {
+            if data.count < 5 && metrics {
                 VStack(alignment: .leading, spacing: 10) {
                     ForEach(0..<data.count, id: \.self) { index in
                         PieChartDataPoint(
                             data: data[index]
                         )
+                    }
+                }
+            }
+            else if metrics {
+                HStack(spacing: 50) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(0..<Int(data.count / 2), id: \.self) { index in
+                            PieChartDataPoint(
+                                data: data[index]
+                            )
+                        }
+                    }
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(Int(data.count / 2)..<data.count, id: \.self) { index in
+                            PieChartDataPoint(
+                                data: data[index]
+                            )
+                        }
                     }
                 }
             }
@@ -162,11 +200,15 @@ struct PieChartDataPoint: View {
             RoundedRectangle(cornerRadius: 4)
                 .frame(width: 20, height: 20)
                 .foregroundColor(data.color)
+            let overflow = data.value > data.max
+            let textColor = overflow ? Color.red : Color.black
             if(displayStyle) {
-                Text("\(data.label) \(String(format: "%.1f", Double(data.value/data.max) * 100))%")
+                Text("\(data.label): \(String(format: "%.1f", Double(data.value/data.max) * 100))%")
+                    .foregroundStyle(textColor)
             }
             else {
-                Text("\(data.label) $\(String(format: "%.2f", data.value)) / $\(String(format: "%.2f", data.max))")
+                Text("\(data.label): $\(String(format: "%.2f", data.value)) / $\(String(format: "%.2f", data.max))")
+                    .foregroundStyle(textColor)
             }
         }.onTapGesture {
             displayStyle = !displayStyle
@@ -203,6 +245,7 @@ struct PieChartDataPoint: View {
             )
         ],
         size: CGSize(width: 250, height: 250),
-        full: false
+        metrics: true,
+        totalPercent: false,
     )
 }
