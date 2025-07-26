@@ -8,12 +8,13 @@ import SwiftUI
 import FormValidator
 
 struct RegisterPanel: View {
+    @State private var isSignUp = false;
     @State private var isAppleSignUp = false;
     @State private var isMicrosoftSignUp = false;
     @State private var isGoogleSignUp = false;
     @State private var displayMoreSignUpOptions = false;
     @State private var password = "";
-    @State private var isSecure = true;
+    @State private var passwordFocused = false
     
     @State private var isMinLength = false;
     @State private var upperChar = false;
@@ -67,40 +68,60 @@ struct RegisterPanel: View {
                             .fontWeight(.medium)
                             .padding(.leading, 5)
                         
-                        ZStack(alignment: .trailing) {
-                            if isSecure {
-                                SecureField("Enter your password", text: $password)
-                            } else {
-                                TextField("Enter your password", text: $password)
+                        CustomSecureField(
+                            placeholder: "Enter your password",
+                            text: $password,
+                            isFocused: $passwordFocused
+                        )
+                    }
+                    .onChange(of: password) {
+                        validatePassword()
+                    }
+                    
+                    if !password.isEmpty && passwordFocused {
+                        VStack(alignment: .leading) {
+                            Text("Your password must include:")
+                                .font(.subheadline)
+                                .padding(EdgeInsets(top: -10, leading: 0, bottom: 3, trailing: 0))
+                            HStack(alignment: .top, spacing: 10){
+                                VStack(alignment: .leading, spacing: 2) {
+                                    PasswordRequirementComponent(text: "At least 8 characters", isValid: isMinLength)
+                                    PasswordRequirementComponent(text: "One number", isValid: number)
+                                }
+                                VStack(alignment: .leading, spacing: 2) {
+                                    PasswordRequirementComponent(text: "One uppercase letter", isValid: upperChar)
+                                    PasswordRequirementComponent(text: "One lowercase letter", isValid: lowerChar)
+                                }
+                                Spacer()
                             }
-                            
-                            Button(action: {
-                                isSecure.toggle()
-                            }) {
-                                Image(systemName: isSecure ? "eye.slash" : "eye")
-                                    .foregroundColor(.secondary)
-                            }
-                            .padding(.trailing, 8)
+                            PasswordRequirementComponent(text: "One special character i.e: '!@#$%^&*'", isValid: special)
                         }
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
                     }
                     
                     Button(action: {
-                        handleAppleSignIn()
+                        isSignUp = true
+                        handleSignUp()
                     }) {
                         HStack {
-                            Text("Sign up")
-                                .font(.headline)
-                                .fontWeight(.medium)
+                            if !isSignUp {
+                                Text("Sign up")
+                                    .font(.headline)
+                                    .fontWeight(.medium)
+                            }
+                            else {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                            }
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
-                        .frame(height: 56)
+                        .frame(height: 48)
                         .background(Color.blue)
                         .cornerRadius(12)
                     }
-                    .disabled(isAppleSignUp)
-                    .opacity(isAppleSignUp ? 0.6 : 1.0)
+                    .disabled(!isFormValid() || isSignUp)
+                    .opacity(!isFormValid() || isSignUp ? 0.6 : 1.0)
                 }
                 .padding(.horizontal, 24)
                 
@@ -195,6 +216,10 @@ struct RegisterPanel: View {
         
     }
     
+    private func handleSignUp() -> Void {
+        
+    }
+    
     private func isFormValid() -> Bool {
         return (
             form.manager.allValid &&
@@ -207,11 +232,26 @@ struct RegisterPanel: View {
     }
     
     private func validatePassword() {
-        isMinLength = password.count >= 12
+        isMinLength = password.count >= 8
         upperChar = password.range(of: "[A-Z]", options: .regularExpression) != nil
         lowerChar = password.range(of: "[a-z]", options: .regularExpression) != nil
         number = password.range(of: "[0-9]", options: .regularExpression) != nil
         special = password.range(of: "[!@#$%^&*]", options: .regularExpression) != nil
+    }
+}
+
+struct PasswordRequirementComponent: View {
+    let text: String
+    let isValid: Bool
+    
+    var body: some View {
+        HStack(spacing: 6) {
+            Image(systemName: isValid ? "checkmark.circle.fill" : "circle")
+                .foregroundColor(isValid ? .green : .gray)
+            Text(text)
+                .font(.caption)
+                .foregroundColor(isValid ? .green : .gray)
+        }
     }
 }
 

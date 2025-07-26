@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E2A8A5B72E3421DA004DC6C9 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5B62E3421DA004DC6C9 /* AWSAPIPlugin */; };
+		E2A8A5B92E3421DA004DC6C9 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5B82E3421DA004DC6C9 /* AWSCognitoAuthPlugin */; };
+		E2A8A5BB2E3421DA004DC6C9 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5BA2E3421DA004DC6C9 /* AWSDataStorePlugin */; };
 		F01EA2962E330B7B0017EC9D /* FormValidator in Frameworks */ = {isa = PBXBuildFile; productRef = F01EA2952E330B7B0017EC9D /* FormValidator */; };
 /* End PBXBuildFile section */
 
@@ -33,9 +36,22 @@
 		F00937612E2BF3D20035C80D /* Budj.ItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Budj.ItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		E2A8A5B42E341F06004DC6C9 /* Exceptions for "Budj.It" folder in "Budj.ItTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				amplify_outputs.json,
+			);
+			target = F00937562E2BF3D20035C80D /* Budj.ItTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F009374A2E2BF3CF0035C80D /* Budj.It */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E2A8A5B42E341F06004DC6C9 /* Exceptions for "Budj.It" folder in "Budj.ItTests" target */,
+			);
 			path = Budj.It;
 			sourceTree = "<group>";
 		};
@@ -56,7 +72,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2A8A5B72E3421DA004DC6C9 /* AWSAPIPlugin in Frameworks */,
 				F01EA2962E330B7B0017EC9D /* FormValidator in Frameworks */,
+				E2A8A5B92E3421DA004DC6C9 /* AWSCognitoAuthPlugin in Frameworks */,
+				E2A8A5BB2E3421DA004DC6C9 /* AWSDataStorePlugin in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +137,9 @@
 			name = Budj.It;
 			packageProductDependencies = (
 				F01EA2952E330B7B0017EC9D /* FormValidator */,
+				E2A8A5B62E3421DA004DC6C9 /* AWSAPIPlugin */,
+				E2A8A5B82E3421DA004DC6C9 /* AWSCognitoAuthPlugin */,
+				E2A8A5BA2E3421DA004DC6C9 /* AWSDataStorePlugin */,
 			);
 			productName = Budj.It;
 			productReference = F00937482E2BF3CF0035C80D /* Budj.It.app */;
@@ -203,6 +225,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F01EA2942E330B7B0017EC9D /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */,
+				E2A8A5B52E3421DA004DC6C9 /* XCRemoteSwiftPackageReference "amplify-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = F00937492E2BF3CF0035C80D /* Products */;
@@ -569,6 +592,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E2A8A5B52E3421DA004DC6C9 /* XCRemoteSwiftPackageReference "amplify-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.49.1;
+			};
+		};
 		F01EA2942E330B7B0017EC9D /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Open-Bytes/SwiftUIFormValidator.git";
@@ -580,6 +611,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E2A8A5B62E3421DA004DC6C9 /* AWSAPIPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A8A5B52E3421DA004DC6C9 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSAPIPlugin;
+		};
+		E2A8A5B82E3421DA004DC6C9 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A8A5B52E3421DA004DC6C9 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		E2A8A5BA2E3421DA004DC6C9 /* AWSDataStorePlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E2A8A5B52E3421DA004DC6C9 /* XCRemoteSwiftPackageReference "amplify-swift" */;
+			productName = AWSDataStorePlugin;
+		};
 		F01EA2952E330B7B0017EC9D /* FormValidator */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = F01EA2942E330B7B0017EC9D /* XCRemoteSwiftPackageReference "SwiftUIFormValidator" */;
