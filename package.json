@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "secret-set": "npx ampx sandbox secret set --profile budjit --identifier 1apol",
+    "secret-get": "npx ampx sandbox secret get --profile budjit --identifier 1apol",
+    "secret-list": "npx ampx sandbox secret list --profile budjit --identifier 1apol",
+    "amz-login": "aws sso login --profile budjit",
+    "sandbox": "npx ampx sandbox --profile budjit --identifier 1apol"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +17,8 @@
   "devDependencies": {
     "@aws-amplify/backend": "^1.16.1",
     "@aws-amplify/backend-cli": "^1.8.0",
+    "@aws-sdk/client-cognito-identity-provider": "^3.848.0",
+    "@types/aws-lambda": "^8.10.152",
     "aws-cdk-lib": "^2.204.0",
     "constructs": "^10.4.2",
     "esbuild": "^0.25.8",
