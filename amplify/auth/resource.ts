@@ -31,7 +31,7 @@ export const auth = defineAuth({
       }
     }
   },
-  groups: ['ADMINS', 'USERS'],
+  groups: ['ADMINS', 'USERS', 'USERS-B'],
   triggers: {
     postConfirmation
   },

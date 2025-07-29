@@ -13,12 +13,11 @@ export const UserBudgetItemModel = a.model({
   ownerProfile: a.belongsTo('UserProfile', 'owner')
 })
 .authorization(allow => [
-  allow.owner().to([
-    'get', 
+  allow.owner().to([ 
     'create', 
     'update', 
     'delete', 
-    'list'
+    'read'
   ]), 
   allow.group('ADMINS')
 ])

@@ -1,5 +1,5 @@
 {
-  "originHash" : "dbeec2debc5c2060174a72700206d59e8a6a1b0b5a3fd1d7c80fc5b4cb31dae2",
+  "originHash" : "4381c7c717cf1abbf56ce0e50a1554fc962a6fa9745a89d2fde67d1d43cc53cb",
   "pins" : [
     {
       "identity" : "amplify-swift",
@@ -17,6 +17,15 @@
       "state" : {
         "revision" : "959eec669ba97c7d923b963c3e66ca8a0b2737f6",
         "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "amplify-ui-swift-authenticator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/aws-amplify/amplify-ui-swift-authenticator",
+      "state" : {
+        "revision" : "fd86328a479da989fce14ef1e13a64f1adcc096c",
+        "version" : "1.2.3"
       }
     },
     {

@@ -6,6 +6,8 @@
 //
 import SwiftUI
 import FormValidator
+import Amplify
+import AuthenticationServices
 
 struct RegisterPanel: View {
     @State private var isSignUp = false;
@@ -100,7 +102,9 @@ struct RegisterPanel: View {
                     
                     Button(action: {
                         isSignUp = true
-                        handleSignUp()
+                        Task {
+                            await handleSignUp()
+                        }
                     }) {
                         HStack {
                             if !isSignUp {
@@ -129,22 +133,24 @@ struct RegisterPanel: View {
                 
                 VStack(spacing: 16) {
                     // Apple Sign In
-                    Button(action: {
-                        handleAppleSignIn()
-                    }) {
-                        HStack {
-                            Image(systemName: "apple.logo")
-                                .font(.title3)
-                            Text("Continue with Apple")
-                                .font(.headline)
-                                .fontWeight(.medium)
+                    SignInWithAppleButton(
+                        .signUp,
+                        onRequest: { request in
+                            request.requestedScopes = [.fullName, .email]
+                            isAppleSignUp.toggle()
+                        },
+                        onCompletion: { result in
+                            switch result {
+                            case .success(let authorization):
+                                handleAppleSignUp(authorization: authorization)
+                            default:
+                                //TODO: do something with the failure
+                                break
+                            }
                         }
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity)
-                        .frame(height: 56)
-                        .background(Color.black)
-                        .cornerRadius(12)
-                    }
+                    )
+                    .signInWithAppleButtonStyle(.black)
+                    .frame(height: 56)
                     .disabled(isAppleSignUp)
                     .opacity(isAppleSignUp ? 0.6 : 1.0)
                     
@@ -204,8 +210,24 @@ struct RegisterPanel: View {
         }
     }
     
-    private func handleAppleSignIn() -> Void {
-        
+    private func handleAppleSignUp(authorization: ASAuthorization) async throws -> Void {
+        if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userId = appleIdCredential.user
+            let fullName = appleIdCredential.fullName
+            let email = appleIdCredential.email
+            
+            print("User ID: \(userId)")
+            print("Full Name: \(String(describing: fullName))")
+            print("Email: \(String(describing: email))")
+            
+            
+            guard let token = appleIdCredential.identityToken
+            else {
+                throw AuthError.missingIdentityToken
+            }
+            
+            appleFederateToIdentityPool(with: token)
+        }
     }
     
     private func handleGoogleSignIn() ->  Void {
@@ -216,8 +238,30 @@ struct RegisterPanel: View {
         
     }
     
-    private func handleSignUp() -> Void {
+    private func handleSignUp() async -> Void {
+        let userAttributes = [
+            AuthUserAttribute(.email, value: form.email)
+        ]
+        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
         
+        do {
+            let signUpResult = try await Amplify.Auth.signUp(
+                username: form.email,
+                password: password,
+                options: options
+            )
+            
+            if case let .confirmUser(deliveryDetails, _, userId) = signUpResult.nextStep {
+                print("Delivery details \(String(describing: deliveryDetails)) for userId: \(String(describing: userId))")
+            }
+            else {
+                print("Signup Complete")
+            }
+        } catch let error as AuthError {
+            print("An error occured during user registration \(error)")
+        } catch {
+            print("Unexpected error: \(error)")
+        }
     }
     
     private func isFormValid() -> Bool {

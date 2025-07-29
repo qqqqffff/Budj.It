@@ -8,7 +8,8 @@
     "secret-get": "npx ampx sandbox secret get --profile budjit --identifier 1apol",
     "secret-list": "npx ampx sandbox secret list --profile budjit --identifier 1apol",
     "amz-login": "aws sso login --profile budjit",
-    "sandbox": "npx ampx sandbox --profile budjit --identifier 1apol"
+    "sandbox": "npx ampx sandbox --profile budjit --identifier 1apol",
+    "swift-outputs": "npx ampx generate graphql-client-code --format modelgen --model-target swift --out ./AmplifyModels --profile budjit --stack amplify-budjit-1apol-sandbox-320fa458b0"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "@aws-amplify/backend-cli": "^1.8.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.848.0",
     "@types/aws-lambda": "^8.10.152",
+    "@types/node": "^24.1.0",
     "aws-cdk-lib": "^2.204.0",
     "constructs": "^10.4.2",
     "esbuild": "^0.25.8",

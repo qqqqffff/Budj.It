@@ -6,6 +6,9 @@ export const UserProfileModel = a.model({
   firstName: a.string().required(),
   lastName: a.string().required(),
   authenticated: a.boolean(),
+  premium: a.boolean(),
+  createdAt: a.datetime().required().default(new Date().toISOString()),
+  updatedAt: a.datetime().required().default(new Date().toISOString()),
   userBudgets: a.hasMany('UserBudgetItem', 'owner')
 })
 .authorization(allow => [
