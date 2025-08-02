@@ -1,8 +1,8 @@
 import { mkdirSync, writeFileSync } from 'fs';
 import { join } from 'path';
 
-const appIdPrefix = process.env.APPLE_TEAM_ID.replace('\'', '');
-const bundleId = process.env.APPLE_BUNDLE_ID.replace('\'', '');
+const appIdPrefix = process.env.APPLE_TEAM_ID.replace('\'', '').replace('\"', '');
+const bundleId = process.env.APPLE_BUNDLE_ID.replace('\'', '').replace('\"', '');
 
 if (!appIdPrefix || !bundleId) {
   console.error('Missing required environment variables: APPLE_APP_ID_PREFIX, APPLE_BUNDLE_ID');

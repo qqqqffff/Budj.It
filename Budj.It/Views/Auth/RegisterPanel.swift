@@ -10,12 +10,13 @@ import Amplify
 import AuthenticationServices
 
 struct RegisterPanel: View {
-    @State private var isSignUp = false;
+    @EnvironmentObject var authManager: AuthManager
+    @StateObject var form = AuthForm()
+    
     @State private var isAppleSignUp = false;
     @State private var isMicrosoftSignUp = false;
     @State private var isGoogleSignUp = false;
     @State private var displayMoreSignUpOptions = false;
-    @State private var password = "";
     @State private var passwordFocused = false
     
     @State private var isMinLength = false;
@@ -23,8 +24,6 @@ struct RegisterPanel: View {
     @State private var lowerChar = false;
     @State private var number = false;
     @State private var special = false;
-    
-    @ObservedObject var form = RegisterForm()
     
     var body: some View {
         NavigationView {
@@ -72,15 +71,15 @@ struct RegisterPanel: View {
                         
                         CustomSecureField(
                             placeholder: "Enter your password",
-                            text: $password,
+                            text: $form.password,
                             isFocused: $passwordFocused
                         )
                     }
-                    .onChange(of: password) {
+                    .onChange(of: form.password) {
                         validatePassword()
                     }
                     
-                    if !password.isEmpty && passwordFocused {
+                    if !form.password.isEmpty && passwordFocused {
                         VStack(alignment: .leading) {
                             Text("Your password must include:")
                                 .font(.subheadline)
@@ -100,23 +99,11 @@ struct RegisterPanel: View {
                         }
                     }
                     
-                    Button(action: {
-                        isSignUp = true
-                        Task {
-                            await handleSignUp()
-                        }
-                    }) {
+                    NavigationLink(destination: RegisterNameView().environmentObject(form)) {
                         HStack {
-                            if !isSignUp {
-                                Text("Sign up")
-                                    .font(.headline)
-                                    .fontWeight(.medium)
-                            }
-                            else {
-                                ProgressView()
-                                    .scaleEffect(0.8)
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            }
+                            Text("Sign up")
+                                .font(.headline)
+                                .fontWeight(.medium)
                         }
                         .foregroundColor(.white)
                         .frame(maxWidth: .infinity)
@@ -124,8 +111,8 @@ struct RegisterPanel: View {
                         .background(Color.blue)
                         .cornerRadius(12)
                     }
-                    .disabled(!isFormValid() || isSignUp)
-                    .opacity(!isFormValid() || isSignUp ? 0.6 : 1.0)
+                    .disabled(!isFormValid())
+                    .opacity(!isFormValid() ? 0.6 : 1.0)
                 }
                 .padding(.horizontal, 24)
                 
@@ -147,6 +134,7 @@ struct RegisterPanel: View {
                                 //TODO: do something with the failure
                                 break
                             }
+                            isAppleSignUp.toggle()
                         }
                     )
                     .signInWithAppleButtonStyle(.black)
@@ -210,7 +198,7 @@ struct RegisterPanel: View {
         }
     }
     
-    private func handleAppleSignUp(authorization: ASAuthorization) async throws -> Void {
+    private func handleAppleSignUp(authorization: ASAuthorization) -> Void {
         if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let userId = appleIdCredential.user
             let fullName = appleIdCredential.fullName
@@ -223,10 +211,11 @@ struct RegisterPanel: View {
             
             guard let token = appleIdCredential.identityToken
             else {
-                throw AuthError.missingIdentityToken
+                //TODO: do something
+                return
             }
             
-            appleFederateToIdentityPool(with: token)
+            authManager.appleFederateToIdentityPool(with: token)
         }
     }
     
@@ -238,35 +227,9 @@ struct RegisterPanel: View {
         
     }
     
-    private func handleSignUp() async -> Void {
-        let userAttributes = [
-            AuthUserAttribute(.email, value: form.email)
-        ]
-        let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-        
-        do {
-            let signUpResult = try await Amplify.Auth.signUp(
-                username: form.email,
-                password: password,
-                options: options
-            )
-            
-            if case let .confirmUser(deliveryDetails, _, userId) = signUpResult.nextStep {
-                print("Delivery details \(String(describing: deliveryDetails)) for userId: \(String(describing: userId))")
-            }
-            else {
-                print("Signup Complete")
-            }
-        } catch let error as AuthError {
-            print("An error occured during user registration \(error)")
-        } catch {
-            print("Unexpected error: \(error)")
-        }
-    }
-    
     private func isFormValid() -> Bool {
         return (
-            form.manager.allValid &&
+            form.emailManager.allValid &&
             isMinLength &&
             upperChar &&
             lowerChar &&
@@ -276,11 +239,11 @@ struct RegisterPanel: View {
     }
     
     private func validatePassword() {
-        isMinLength = password.count >= 8
-        upperChar = password.range(of: "[A-Z]", options: .regularExpression) != nil
-        lowerChar = password.range(of: "[a-z]", options: .regularExpression) != nil
-        number = password.range(of: "[0-9]", options: .regularExpression) != nil
-        special = password.range(of: "[!@#$%^&*]", options: .regularExpression) != nil
+        isMinLength = form.password.count >= 8
+        upperChar = form.password.range(of: "[A-Z]", options: .regularExpression) != nil
+        lowerChar = form.password.range(of: "[a-z]", options: .regularExpression) != nil
+        number = form.password.range(of: "[0-9]", options: .regularExpression) != nil
+        special = form.password.range(of: "[!@#$%^&*]", options: .regularExpression) != nil
     }
 }
 

@@ -9,8 +9,24 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
+    @StateObject private var authManager = AuthManager()
+    @StateObject private var userProfileService = UserProfileService()
+    
     var body: some View {
-        
+        Group {
+            if authManager.isLoading {
+                VStack {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                    Text("Loading...")
+                        .padding(.top)
+                }
+            } else if authManager.isSignedIn {
+                HomeContainer()
+            } else {
+                AuthContainer()
+            }
+        }
     }
 }
 

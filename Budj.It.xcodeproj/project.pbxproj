@@ -55,22 +55,9 @@
 		F00937612E2BF3D20035C80D /* Budj.ItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Budj.ItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E2A8A5E12E37BEEA004DC6C9 /* Exceptions for "Budj.It" folder in "Budj.ItTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				amplify_outputs.json,
-			);
-			target = F00937562E2BF3D20035C80D /* Budj.ItTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		F009374A2E2BF3CF0035C80D /* Budj.It */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				E2A8A5E12E37BEEA004DC6C9 /* Exceptions for "Budj.It" folder in "Budj.ItTests" target */,
-			);
 			path = Budj.It;
 			sourceTree = "<group>";
 		};
