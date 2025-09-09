@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct HomeContainer: View {
+    @EnvironmentObject var profileService: UserProfileService
     var body: some View {
         
     }
+}
+
+#Preview {
+    HomeContainer()
 }

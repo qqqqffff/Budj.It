@@ -9,8 +9,8 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @StateObject private var authManager = AuthManager()
     @StateObject private var userProfileService = UserProfileService()
+    @StateObject private var authManager = AuthManager()
     
     var body: some View {
         Group {
@@ -25,6 +25,7 @@ struct ContentView: View {
                 HomeContainer()
             } else {
                 AuthContainer()
+                    .environmentObject(authManager)
             }
         }
     }

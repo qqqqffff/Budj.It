@@ -35,13 +35,20 @@ struct VerificationCodeInput: View {
                             )
                     )
                     .keyboardType(.numberPad)
+                    .onKeyPress(keys: [.delete], phases: .down) { press in
+                        digits[index] = ""
+                        focusedField = index > 0 ? index - 1 : 0
+                        return .handled
+                    }
                     .focused($focusedField, equals: index)
                     .onChange(of: digits[index]) {
-                        handleDigitChange(at: index, newValue: digits[index])
+                        handleDigitChange(at: index, value: digits[index])
                     }
                     .onTapGesture {
                         focusedField = index
                     }
+                    .disabled(index > 0 && digits[index - 1] == "")
+                    
             }
         }
         .onAppear {
@@ -49,14 +56,21 @@ struct VerificationCodeInput: View {
         }
     }
     
-    private func handleDigitChange(at index: Int, newValue: String) {
+    private func handleDigitChange(at index: Int, value: String) {
+        let newValue = value.replacingOccurrences(of: "[^0-9]", with: "", options: .regularExpression)
         if newValue.count > 1 {
-            let fill = newValue.split(separator: "", maxSplits: digitCount - index)
-            
-            fill.enumerated().forEach { jindex, char in
-                digits[index + jindex] = char.base
+            var newValIndex = 0
+            for jindex in index...newValue.count + index {
+                if jindex < digits.count && newValIndex < newValue.count {
+                    let c = newValue.index(newValue.startIndex, offsetBy: newValIndex)
+                    digits[jindex] = String(newValue[c])
+                    newValIndex += 1
+                }
+                else {
+                    break
+                }
             }
-            
+            focusedField = newValIndex + index
         } else if newValue.count == 1 && newValue.isNumber {
             digits[index] = newValue
             

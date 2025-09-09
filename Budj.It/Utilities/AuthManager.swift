@@ -21,7 +21,6 @@ class AuthManager: ObservableObject {
         checkAuthStatus()
     }
     
-    
     func checkAuthStatus() {
         Task {
             do {
@@ -76,6 +75,12 @@ class AuthManager: ObservableObject {
             confirmationCode: confirmationCode
         )
         
+        if confirmSignUpResult.isSignUpComplete {
+            await fetchCurrentUser()
+            await MainActor.run {
+                self.isSignedIn = true
+            }
+        }
         
         return confirmSignUpResult
     }

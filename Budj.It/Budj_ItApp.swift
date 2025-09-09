@@ -16,19 +16,19 @@ import AuthenticationServices
 @main
 struct Budj_ItApp: App {
     init() {
-        let appleIdProvider = ASAuthorizationAppleIDProvider()
-        appleIdProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
-            switch credentialState {
-                case .authorized:
-                    break
-                case .revoked, .notFound:
-                    //TODO: reroute to login screen
-                    break
-                default:
-                    //TODO: do something
-                    break
-            }
-        }
+//        let appleIdProvider = ASAuthorizationAppleIDProvider()
+//        appleIdProvider.getCredentialState(forUserID: KeychainItem.currentUserIdentifier) { (credentialState, error) in
+//            switch credentialState {
+//                case .authorized:
+//                    break
+//                case .revoked, .notFound:
+//                    //TODO: reroute to login screen
+//                    break
+//                default:
+//                    //TODO: do something
+//                    break
+//            }
+//        }
         let awsApiPlugin = AWSAPIPlugin(modelRegistration: AmplifyModels())
     
         do {

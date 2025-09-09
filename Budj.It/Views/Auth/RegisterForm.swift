@@ -8,7 +8,15 @@
 import FormValidator
 import UIKit
 
-class AuthForm: ObservableObject {
+enum RegisterFormState {
+    case email
+    case name
+    case verification
+}
+
+class RegisterForm: ObservableObject {
+    @Published
+    var signUpFormState: RegisterFormState = .email
     @Published
     var emailManager = FormManager(validationType: .immediate)
     @Published
@@ -52,7 +60,7 @@ class AuthForm: ObservableObject {
         )
     })
     var lastName = ""
-    lazy var lastNameValidation = _firstName.validation(manager: nameManager)
+    lazy var lastNameValidation = _lastName.validation(manager: nameManager)
     
     //i dont like how they do their password validation -> i will do seperately
 }

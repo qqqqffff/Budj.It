@@ -19,7 +19,7 @@ struct LoginPanel: View {
     @State private var password = "";
     @State private var passwordFocused = false
     
-    @ObservedObject var form = AuthForm()
+    @ObservedObject var form = RegisterForm()
     
     var body: some View {
         VStack(spacing: 0) {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E29EFE672E44F45100BF0620 /* amplify_outputs.json in Resources */ = {isa = PBXBuildFile; fileRef = E29EFE662E44F45100BF0620 /* amplify_outputs.json */; };
+		E29EFE682E44F45100BF0620 /* amplify_outputs.json in Resources */ = {isa = PBXBuildFile; fileRef = E29EFE662E44F45100BF0620 /* amplify_outputs.json */; };
 		E2A8A5D62E37BC25004DC6C9 /* AWSAPIPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5D52E37BC25004DC6C9 /* AWSAPIPlugin */; };
 		E2A8A5D82E37BC25004DC6C9 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5D72E37BC25004DC6C9 /* AWSCognitoAuthPlugin */; };
 		E2A8A5DA2E37BC25004DC6C9 /* AWSDataStorePlugin in Frameworks */ = {isa = PBXBuildFile; productRef = E2A8A5D92E37BC25004DC6C9 /* AWSDataStorePlugin */; };
@@ -23,6 +25,7 @@
 		E2A8A5F22E37C0FF004DC6C9 /* UserBudgetItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8A5E32E37C0FF004DC6C9 /* UserBudgetItem.swift */; };
 		E2A8A5F32E37C0FF004DC6C9 /* UserBudgetItem+Schema.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8A5E42E37C0FF004DC6C9 /* UserBudgetItem+Schema.swift */; };
 		E2A8A5F42E37C0FF004DC6C9 /* UserBudgetItemCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A8A5E52E37C0FF004DC6C9 /* UserBudgetItemCategory.swift */; };
+		E2DD97C22E56293F007201E8 /* Budj-it-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E2DD97C02E562935007201E8 /* Budj-it-Info.plist */; };
 		F01EA2962E330B7B0017EC9D /* FormValidator in Frameworks */ = {isa = PBXBuildFile; productRef = F01EA2952E330B7B0017EC9D /* FormValidator */; };
 /* End PBXBuildFile section */
 
@@ -44,12 +47,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E29EFE662E44F45100BF0620 /* amplify_outputs.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = amplify_outputs.json; sourceTree = "<group>"; };
 		E2A8A5E22E37C0FF004DC6C9 /* AmplifyModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmplifyModels.swift; sourceTree = "<group>"; };
 		E2A8A5E32E37C0FF004DC6C9 /* UserBudgetItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBudgetItem.swift; sourceTree = "<group>"; };
 		E2A8A5E42E37C0FF004DC6C9 /* UserBudgetItem+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserBudgetItem+Schema.swift"; sourceTree = "<group>"; };
 		E2A8A5E52E37C0FF004DC6C9 /* UserBudgetItemCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBudgetItemCategory.swift; sourceTree = "<group>"; };
 		E2A8A5E62E37C0FF004DC6C9 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		E2A8A5E72E37C0FF004DC6C9 /* UserProfile+Schema.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserProfile+Schema.swift"; sourceTree = "<group>"; };
+		E2DD97C02E562935007201E8 /* Budj-it-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Budj-it-Info.plist"; sourceTree = "<group>"; };
 		F00937482E2BF3CF0035C80D /* Budj.It.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Budj.It.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F00937572E2BF3D20035C80D /* Budj.ItTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Budj.ItTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F00937612E2BF3D20035C80D /* Budj.ItUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Budj.ItUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -119,11 +124,13 @@
 		F009373F2E2BF3CF0035C80D = {
 			isa = PBXGroup;
 			children = (
+				E2DD97C02E562935007201E8 /* Budj-it-Info.plist */,
 				F009374A2E2BF3CF0035C80D /* Budj.It */,
 				F009375A2E2BF3D20035C80D /* Budj.ItTests */,
 				F00937642E2BF3D20035C80D /* Budj.ItUITests */,
 				F00937492E2BF3CF0035C80D /* Products */,
 				E2A8A5E82E37C0FF004DC6C9 /* AmplifyModels */,
+				E29EFE662E44F45100BF0620 /* amplify_outputs.json */,
 			);
 			sourceTree = "<group>";
 		};
@@ -267,6 +274,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E29EFE682E44F45100BF0620 /* amplify_outputs.json in Resources */,
+				E2DD97C22E56293F007201E8 /* Budj-it-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +283,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E29EFE672E44F45100BF0620 /* amplify_outputs.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +478,7 @@
 				DEVELOPMENT_TEAM = 2R46Z987AY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Budj-It-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Budj.It;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -499,6 +510,7 @@
 				DEVELOPMENT_TEAM = 2R46Z987AY;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Budj-It-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Budj.It;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;

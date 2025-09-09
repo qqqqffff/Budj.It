@@ -11,7 +11,7 @@ import AuthenticationServices
 
 struct RegisterPanel: View {
     @EnvironmentObject var authManager: AuthManager
-    @StateObject var form = AuthForm()
+    @StateObject var form = RegisterForm()
     
     @State private var isAppleSignUp = false;
     @State private var isMicrosoftSignUp = false;
@@ -24,6 +24,8 @@ struct RegisterPanel: View {
     @State private var lowerChar = false;
     @State private var number = false;
     @State private var special = false;
+    
+    @State private var error: String?
     
     var body: some View {
         NavigationView {
@@ -99,7 +101,10 @@ struct RegisterPanel: View {
                         }
                     }
                     
-                    NavigationLink(destination: RegisterNameView().environmentObject(form)) {
+                    NavigationLink(destination: RegisterNameView()
+                        .environmentObject(form)
+                        .environmentObject(authManager)
+                    ) {
                         HStack {
                             Text("Sign up")
                                 .font(.headline)
@@ -196,6 +201,7 @@ struct RegisterPanel: View {
                 .padding(.horizontal, 24)
             }
         }
+        .navigationBarBackButtonHidden()
     }
     
     private func handleAppleSignUp(authorization: ASAuthorization) -> Void {
@@ -265,5 +271,10 @@ struct PasswordRequirementComponent: View {
 
 
 #Preview {
+    @Previewable @StateObject var manager = AuthManager()
+    @Previewable @StateObject var service = UserProfileService()
+    
     RegisterPanel()
+        .environmentObject(manager)
+        .environmentObject(service)
 }
