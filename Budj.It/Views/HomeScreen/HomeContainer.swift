@@ -9,8 +9,11 @@ import SwiftUI
 
 struct HomeContainer: View {
     @EnvironmentObject var profileService: UserProfileService
+    @EnvironmentObject var authManager: AuthManager
+    
     var body: some View {
-        
+        Text("Hello World")
+            .navigationBarBackButtonHidden()
     }
 }
 

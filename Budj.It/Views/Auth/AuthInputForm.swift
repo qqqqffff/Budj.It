@@ -8,17 +8,17 @@
 import FormValidator
 import UIKit
 
-enum RegisterFormState {
+enum AuthFormState {
     case email
     case name
     case verification
 }
 
-class RegisterForm: ObservableObject {
+class AuthInputForm: ObservableObject {
     @Published
-    var signUpFormState: RegisterFormState = .email
+    var signUpFormState: AuthFormState = .email
     @Published
-    var emailManager = FormManager(validationType: .immediate)
+    var emailManager = FormManager(validationType: .deferred)
     @Published
     var nameManager = FormManager(validationType: .immediate)
     

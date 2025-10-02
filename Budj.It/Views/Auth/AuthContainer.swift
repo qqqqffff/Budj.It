@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AuthContainer: View {
-    @State private var showSignIn = false
     @EnvironmentObject private var authManager: AuthManager
     
     var body: some View {
@@ -33,7 +32,7 @@ struct AuthContainer: View {
                             .font(.title2)
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 10)
-                            .background(.green)
+                            .background(.green.opacity(0.9))
                             .foregroundColor(.white)
                             .cornerRadius(20)
                     }
@@ -47,5 +46,7 @@ struct AuthContainer: View {
 
 
 #Preview {
+    @Previewable @StateObject var manager = AuthManager()
     AuthContainer()
+        .environmentObject(manager)
 }

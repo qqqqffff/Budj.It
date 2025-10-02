@@ -9,6 +9,7 @@ import Amplify
 import Foundation
 import AWSCognitoAuthPlugin
 import SwiftUI
+import AuthenticationServices
 
 class AuthManager: ObservableObject {
     @Published var isSignedIn = false
@@ -20,6 +21,8 @@ class AuthManager: ObservableObject {
     init() {
         checkAuthStatus()
     }
+    
+    
     
     func checkAuthStatus() {
         Task {
@@ -114,7 +117,28 @@ class AuthManager: ObservableObject {
         }
     }
     
-    func appleFederateToIdentityPool(with token: Data) {
+    func handleAppleSignUp(authorization: ASAuthorization) -> Void {
+        if let appleIdCredential = authorization.credential as? ASAuthorizationAppleIDCredential {
+            let userId = appleIdCredential.user
+            let fullName = appleIdCredential.fullName
+            let email = appleIdCredential.email
+            
+            print("User ID: \(userId)")
+            print("Full Name: \(String(describing: fullName))")
+            print("Email: \(String(describing: email))")
+            
+            
+            guard let token = appleIdCredential.identityToken
+            else {
+                //TODO: do something
+                return
+            }
+            
+            appleFederateToIdentityPool(with: token)
+        }
+    }
+    
+    private func appleFederateToIdentityPool(with token: Data) {
         guard
             let tokenString = String(data: token, encoding: .utf8),
             let plugin = try? Amplify.Auth.getPlugin(for: "awsCognitoAuthPlugin") as? AWSCognitoAuthPlugin

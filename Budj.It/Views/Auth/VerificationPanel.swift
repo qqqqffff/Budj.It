@@ -13,9 +13,8 @@ struct VerificationPanel: View {
     @State private var isLoading = false
     @State private var showSuccess = false
     @EnvironmentObject var authManager: AuthManager
-    @EnvironmentObject var form: RegisterForm
+    @EnvironmentObject var form: AuthInputForm
     @State private var errorMessage: String?
-    @State private var navigateToSignUp = false
     
     var body: some View {
         ZStack {
@@ -138,7 +137,7 @@ struct VerificationPanel: View {
 
 #Preview {
     @Previewable @StateObject var form = ({
-        var form = RegisterForm()
+        var form = AuthInputForm()
         form.email = "test@test.com"
         return form
     })()

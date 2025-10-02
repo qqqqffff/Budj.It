@@ -7,6 +7,11 @@
 
 import SwiftUI
 
+class ErrorObject: ObservableObject {
+    @Published
+    var message: String?
+}
+
 struct ErrorMessage: View {
     let message: String
     let onDismiss: () -> Void
