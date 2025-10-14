@@ -8,13 +8,7 @@
 import SwiftUI
 
 struct AuthWelcomeHeader: View {
-    let login: Bool
-    
-    init(
-        login: Bool = false
-    ) {
-        self.login = login
-    }
+    @Binding var currentScreen: AuthScreen
     
     var body: some View {
         VStack {
@@ -25,12 +19,12 @@ struct AuthWelcomeHeader: View {
                 .foregroundColor(.blue)
                 .padding(.bottom, 16)
             
-            Text(login ? "Welcome Back" : "Create Account")
+            Text(currentScreen == .login ? "Welcome Back" : "Create Account")
                 .font(.largeTitle)
                 .fontWeight(.bold)
                 .padding(.bottom, 8)
             
-            Text(login ? "Login to continue" : "Register to get started")
+            Text(currentScreen == .login ? "Login to continue" : "Register to get started")
                 .font(.body)
                 .foregroundColor(.secondary)
         }

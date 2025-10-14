@@ -29,7 +29,7 @@ export const handler: PostConfirmationTriggerHandler = async (event) => {
     email: event.request.userAttributes.email,
     firstName: event.request.userAttributes.given_name || "",
     lastName: event.request.userAttributes.family_name || "",
-    authenticated: false,
+    authenticated: true,
     premium: false, 
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()

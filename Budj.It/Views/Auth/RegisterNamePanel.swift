@@ -17,6 +17,8 @@ struct RegisterNameView: View {
     @State private var navigateToLogin = false
     @State private var errorMessage: String?
     @State private var signUpResult: AuthSignUpResult?
+    
+    var currentScreen: Binding<AuthScreen>
         
     var body: some View {
         NavigationStack {
@@ -114,7 +116,7 @@ struct RegisterNameView: View {
                 .navigationDestination(
                     isPresented: $navigateToLogin,
                     destination: {
-                        LoginPanel()
+                        LoginPanel(currentScreen: currentScreen)
                     }
                 )
             }
@@ -205,8 +207,9 @@ struct RegisterNameView: View {
     @Previewable @StateObject var form = AuthInputForm()
     @Previewable @StateObject var manager = AuthManager()
     @Previewable @StateObject var service = UserProfileService()
+    @Previewable @State var currentScreen: AuthScreen = .register
     
-    RegisterNameView()
+    RegisterNameView(currentScreen: $currentScreen)
         .environmentObject(form)
         .environmentObject(manager)
         .environmentObject(service)

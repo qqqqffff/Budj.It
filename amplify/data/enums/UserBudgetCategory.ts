@@ -5,13 +5,10 @@ export const UserBudgetCategory = a.enum([
   'Car', 
   'Food', 
   'Utilities', 
-  'Loans', 
-  'Credit', 
-  'Savings', 
-  'Investments',
+  'Loans/Credit', 
+  'Savings/Investments', 
   'Transportation',
   'Entertainment',
-  'Subscriptions',
   'Shopping',
   'Other'
 ])

@@ -12,6 +12,7 @@ struct AuthInputItems: View {
     @EnvironmentObject var form: AuthInputForm
     @EnvironmentObject var authManager: AuthManager
     @EnvironmentObject var errorMessage: ErrorObject
+    @EnvironmentObject var userProfileService: UserProfileService
     
     @State private var isMinLength = false;
     @State private var upperChar = false;
@@ -25,14 +26,7 @@ struct AuthInputItems: View {
     
     @State private var navigateToHome = false
     
-    let login: Bool
-    
-    
-    init(
-        login: Bool = false
-    ) {
-        self.login = login
-    }
+    @Binding var currentScreen: AuthScreen
     
     var body: some View {
         ZStack {
@@ -75,7 +69,7 @@ struct AuthInputItems: View {
                     validatePassword()
                 }
                 
-                if !form.password.isEmpty && passwordFocused && !login {
+                if !form.password.isEmpty && passwordFocused && currentScreen != .login {
                     VStack(alignment: .leading) {
                         Text("Your password must include:")
                             .font(.subheadline)
@@ -95,7 +89,7 @@ struct AuthInputItems: View {
                     }
                 }
                 
-                if login {
+                if currentScreen == .login {
                     Button(action: {
                         Task {
                             do {
@@ -162,7 +156,7 @@ struct AuthInputItems: View {
                 }
                 else {
                     NavigationLink(destination: {
-                        RegisterNameView()
+                        RegisterNameView(currentScreen: $currentScreen)
                             .environmentObject(form)
                             .environmentObject(authManager)
                     }) {
@@ -216,9 +210,10 @@ struct AuthInputItems: View {
     @Previewable @StateObject var manager = AuthManager()
     @Previewable @StateObject var form = AuthInputForm()
     @Previewable @StateObject var errorObject = ErrorObject()
+    @Previewable @State var currentScreen: AuthScreen = .login
     
     NavigationStack {
-        AuthInputItems(login: true)
+        AuthInputItems(currentScreen: $currentScreen)
             .environmentObject(manager)
             .environmentObject(form)
             .environmentObject(errorObject)

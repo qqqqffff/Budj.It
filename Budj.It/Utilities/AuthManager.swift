@@ -16,13 +16,9 @@ class AuthManager: ObservableObject {
     @Published var authUser: AuthUser?
     @Published var isLoading = true
     
-    @EnvironmentObject var userProfileService: UserProfileService
-    
     init() {
         checkAuthStatus()
     }
-    
-    
     
     func checkAuthStatus() {
         Task {
@@ -48,7 +44,6 @@ class AuthManager: ObservableObject {
         do {
             let user = try await Amplify.Auth.getCurrentUser()
             self.authUser = user
-            await userProfileService.getUserProfile(owner: user.userId)
         } catch {
             print("Failed to fetch current user \(error)")
         }
@@ -113,7 +108,6 @@ class AuthManager: ObservableObject {
         await MainActor.run {
             self.isSignedIn = false
             self.authUser = nil
-            userProfileService.userProfile = nil
         }
     }
     

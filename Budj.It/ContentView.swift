@@ -13,20 +13,21 @@ struct ContentView: View {
     @StateObject private var authManager = AuthManager()
     
     var body: some View {
-        Group {
-            if authManager.isLoading {
-                VStack {
-                    ProgressView()
-                        .scaleEffect(1.5)
-                    Text("Loading...")
-                        .padding(.top)
-                }
-            } else if authManager.isSignedIn {
-                HomeContainer()
-            } else {
-                AuthContainer()
-                    .environmentObject(authManager)
+        if authManager.isLoading {
+            VStack {
+                ProgressView()
+                    .scaleEffect(1.5)
+                Text("Loading...")
+                    .padding(.top)
             }
+        } else if authManager.isSignedIn {
+            HomeContainer()
+                .environmentObject(authManager)
+                .environmentObject(userProfileService)
+        } else {
+            AuthContainer()
+                .environmentObject(authManager)
+                .environmentObject(userProfileService)
         }
     }
 }
